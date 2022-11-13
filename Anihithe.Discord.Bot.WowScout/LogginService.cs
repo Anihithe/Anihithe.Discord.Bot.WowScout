@@ -11,7 +11,14 @@ public class LoggingService
         client.Log += LogAsync;
         command.Log += LogAsync;
     }
-    public Task LogAsync(LogMessage message)
+
+    public Task LogStringAsync(string message)
+    {
+        return LogAsync(new LogMessage(LogSeverity.Info, "Custom", message));
+    }
+    
+    
+    private Task LogAsync(LogMessage message)
     {
         if (message.Exception is CommandException cmdException)
         {
