@@ -1,5 +1,4 @@
-﻿using Anihithe.Discord.Bot.WowScout.Models;
-using Anihithe.Discord.Bot.WowScout.Services;
+﻿using Anihithe.Discord.Bot.WowScout.Services;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -18,22 +17,22 @@ internal static class Program
         var commands = services.GetRequiredService<InteractionService>();
         await services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-        var wowToken = await BlizzardOAuth2.GetToken(configuration["Wow:ClientId"], configuration["Wow:ClientSecret"]);
-        
+        await BlizzardOAuth2.GetToken(configuration["Wow:ClientId"], configuration["Wow:ClientSecret"]);
+
         await client.LoginAsync(TokenType.Bot, configuration["Discord:Token"]);
         await client.StartAsync();
-        
+
         client.Ready += ClientReady;
 
         // Block this task until the program is closed.
         await Task.Delay(-1);
-        
+
         async Task ClientReady()
         {
             //var a = client.GetChannel(1003246265510928384) as IMessageChannel;
             //a.SendMessageAsync("i'm online");
 
-            await commands.RegisterCommandsGloballyAsync(true);
+            await commands.RegisterCommandsGloballyAsync();
         }
     }
 }

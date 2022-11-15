@@ -6,8 +6,6 @@ namespace Anihithe.Discord.Bot.WowScout.Modules;
 // interation modules must be public and inherit from an IInterationModuleBase
 public class ExampleCommands : InteractionModuleBase<SocketInteractionContext>
 {
-    // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
-    public InteractionService Commands { get; set; }
     private CommandHandler _handler;
 
     // constructor injection is also a valid way to access the dependecies
@@ -15,6 +13,9 @@ public class ExampleCommands : InteractionModuleBase<SocketInteractionContext>
     {
         _handler = handler;
     }
+
+    // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
+    public InteractionService Commands { get; set; }
 
     // our first /command!
     [SlashCommand("8ball", "find your answer!")]

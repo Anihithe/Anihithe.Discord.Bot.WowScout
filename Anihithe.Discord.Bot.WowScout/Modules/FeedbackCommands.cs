@@ -5,6 +5,15 @@ namespace Anihithe.Discord.Bot.WowScout.Modules;
 
 public class FeedbackCommands : InteractionModuleBase<SocketInteractionContext>
 {
+    public enum Rating
+    {
+        Terrible,
+        Meh,
+        Good,
+        Lovely,
+        Excelent
+    }
+
     private readonly CommandHandler _handler;
 
     public FeedbackCommands(CommandHandler handler)
@@ -16,14 +25,5 @@ public class FeedbackCommands : InteractionModuleBase<SocketInteractionContext>
     public async Task Feedback(Rating choice)
     {
         await RespondAsync($"u make a choice : {choice.ToString()}");
-    }
-
-    public enum Rating
-    {
-        Terrible,
-        Meh,
-        Good,
-        Lovely,
-        Excelent
     }
 }

@@ -33,9 +33,9 @@ public static class DependencyInjector
 
     private static ServiceCollection AddDiscordCommandServiceConfig(this ServiceCollection services)
     {
-        var config = new CommandServiceConfig()
+        var config = new CommandServiceConfig
         {
-            CaseSensitiveCommands = false,
+            CaseSensitiveCommands = false
         };
         services.AddSingleton(config);
         return services;

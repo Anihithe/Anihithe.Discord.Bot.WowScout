@@ -26,8 +26,10 @@ public class LoggingService
                               + $" failed to execute in {cmdException.Context.Channel}.");
             Console.WriteLine(cmdException);
         }
-        else 
+        else
+        {
             Console.WriteLine($"[General/{message.Severity}] {message}");
+        }
 
         return Task.CompletedTask;
     }

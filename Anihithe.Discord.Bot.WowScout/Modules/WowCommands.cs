@@ -1,14 +1,15 @@
-﻿using Anihithe.Discord.Bot.WowScout.Services;
+﻿using System.Net;
+using Anihithe.Discord.Bot.WowScout.Models;
+using Anihithe.Discord.Bot.WowScout.Services;
 using Discord.Interactions;
+using Newtonsoft.Json;
 
 namespace Anihithe.Discord.Bot.WowScout.Modules;
 
-[Group("wow","wow commands")]
+[Group("wow", "wow commands")]
 // interation modules must be public and inherit from an IInterationModuleBase
 public class WowCommands : InteractionModuleBase<SocketInteractionContext>
 {
-    // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
-    public InteractionService Commands { get; set; }
     private CommandHandler _handler;
 
     // constructor injection is also a valid way to access the dependecies
@@ -17,11 +18,18 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
         _handler = handler;
     }
 
-    // our first /command!
-    [SlashCommand("get-my-chars", "get character link to account")]
-    public async Task EightBall(string accountname)
+    // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
+    public InteractionService Commands { get; set; }
+
+    [SlashCommand("get-my-char", "get character detail")]
+    public async Task GetMyChar(string realm, string characterName)
     {
-        //https://eu.api.blizzard.com/profile/wow/character/elune/nealys/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=EUVVnGx40tnhTAvGSvCstpjBOfUGRAQnDd
-        await RespondAsync($"not implemented yet");
+        var client = new HttpClient();
+        var uri = new Uri(
+            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}?namespace=profile-eu&locale=fr_FR&access_token={BlizzardOAuth2.wowToken.accessToken}");
+        var response = await client.GetAsync(uri);
+        var result = await response.Content.ReadAsStringAsync();
+        var character = JsonConvert.DeserializeObject<CharacterModel>(result);
+        await RespondAsync(character?.ToString() ?? "not found");
     }
 }

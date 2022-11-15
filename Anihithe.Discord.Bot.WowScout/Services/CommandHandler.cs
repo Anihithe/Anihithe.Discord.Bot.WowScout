@@ -52,8 +52,6 @@ public class CommandHandler
             case InteractionCommandError.Unsuccessful:
                 // implement
                 break;
-            default:
-                break;
         }
 
         return Task.CompletedTask;
@@ -79,8 +77,6 @@ public class CommandHandler
             case InteractionCommandError.Unsuccessful:
                 // implement
                 break;
-            default:
-                break;
         }
 
         return Task.CompletedTask;
@@ -98,15 +94,13 @@ public class CommandHandler
                 // implement
                 break;
             case InteractionCommandError.BadArgs:
-                
+
                 break;
             case InteractionCommandError.Exception:
                 // implement
                 break;
             case InteractionCommandError.Unsuccessful:
                 // implement
-                break;
-            default:
                 break;
         }
 
@@ -127,9 +121,7 @@ public class CommandHandler
             // if a Slash Command execution fails it is most likely that the original interaction acknowledgement will persist. It is a good idea to delete the original
             // response, or at least let the user know that something went wrong during the command execution.
             if (arg.Type == InteractionType.ApplicationCommand)
-            {
-                await arg.GetOriginalResponseAsync().ContinueWith(async (msg) => await msg.Result.DeleteAsync());
-            }
+                await arg.GetOriginalResponseAsync().ContinueWith(async msg => await msg.Result.DeleteAsync());
         }
     }
 }
