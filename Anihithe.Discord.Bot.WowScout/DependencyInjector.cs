@@ -1,4 +1,6 @@
-﻿using Discord.Commands;
+﻿using Anihithe.Discord.Bot.WowScout.Services;
+using Discord.Commands;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,23 +14,30 @@ public static class DependencyInjector
         var services = new ServiceCollection();
         services
             .AddDiscordSocketConfig()
+            .AddDiscordCommandServiceConfig()
             .AddSingleton(configuration)
             .AddSingleton<DiscordSocketClient>()
-            .AddSingleton<CommandService>()
-            .AddSingleton<LoggingService>();
+            .AddSingleton<CommandHandler>()
+            .AddSingleton<LoggingService>()
+            .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
 
         return Task.FromResult<IServiceProvider>(services.BuildServiceProvider());
     }
-    
+
     private static ServiceCollection AddDiscordSocketConfig(this ServiceCollection services)
     {
         var config = new DiscordSocketConfig {MessageCacheSize = 100};
         services.AddSingleton(config);
         return services;
     }
-    
-    // private static ServiceCollection AddLoggin(this ServiceCollection services)
-    // {
-    //     var 
-    // }
+
+    private static ServiceCollection AddDiscordCommandServiceConfig(this ServiceCollection services)
+    {
+        var config = new CommandServiceConfig()
+        {
+            CaseSensitiveCommands = false,
+        };
+        services.AddSingleton(config);
+        return services;
+    }
 }
