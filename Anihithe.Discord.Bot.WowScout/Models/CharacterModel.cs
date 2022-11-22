@@ -19,24 +19,3 @@ Serveur: {Realm.Name}
 Guilde: {Guild.Name}";
     }
 }
-
-public class SinglePropClass
-{
-    [JsonProperty("name")] public string Name;
-}
-
-public class Guild : SinglePropClass
-{
-}
-
-public class Realm : SinglePropClass
-{
-}
-
-public class Race : SinglePropClass
-{
-}
-
-public class CharacterClass : SinglePropClass
-{
-}

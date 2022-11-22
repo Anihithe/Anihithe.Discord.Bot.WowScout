@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anihithe.Discord.Bot.WowScout", "Anihithe.Discord.Bot.WowScout\Anihithe.Discord.Bot.WowScout.csproj", "{1B899F65-906A-4251-9CA9-FC1ACF04D5B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anihithe.Wow.Api.Client", "Anihithe.Wow.Api.Client\Anihithe.Wow.Api.Client.csproj", "{2647EFA1-E023-49C0-B456-E5AB80999C9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{1B899F65-906A-4251-9CA9-FC1ACF04D5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B899F65-906A-4251-9CA9-FC1ACF04D5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B899F65-906A-4251-9CA9-FC1ACF04D5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2647EFA1-E023-49C0-B456-E5AB80999C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2647EFA1-E023-49C0-B456-E5AB80999C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2647EFA1-E023-49C0-B456-E5AB80999C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2647EFA1-E023-49C0-B456-E5AB80999C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
