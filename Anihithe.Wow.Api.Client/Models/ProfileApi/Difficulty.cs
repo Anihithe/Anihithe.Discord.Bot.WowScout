@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Difficulty(
-    [property: JsonPropertyName("type")] string Type,
-    [property: JsonPropertyName("name")] string Name
+    [property: JsonProperty("type")] string Type,
+    [property: JsonProperty("name")] string Name
 );

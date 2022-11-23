@@ -1,11 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Mode(
-    [property: JsonPropertyName("difficulty")]
+    [property: JsonProperty("difficulty")]
     Difficulty Difficulty,
-    [property: JsonPropertyName("status")] Status Status,
-    [property: JsonPropertyName("progress")]
+    [property: JsonProperty("status")] Status Status,
+    [property: JsonProperty("progress")]
     Progress Progress
 );

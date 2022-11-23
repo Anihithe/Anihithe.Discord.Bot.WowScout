@@ -17,7 +17,7 @@ internal static class Program
         var commands = services.GetRequiredService<InteractionService>();
         await services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-        await BlizzardOAuth2.GetToken(configuration["Wow:ClientId"], configuration["Wow:ClientSecret"]);
+        await BlizzardOAuth2.GetToken(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!, configuration["Wow:OAuthUrl"]!);
 
         await client.LoginAsync(TokenType.Bot, configuration["Discord:Token"]);
         await client.StartAsync();

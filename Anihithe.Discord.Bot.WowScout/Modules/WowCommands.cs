@@ -1,6 +1,5 @@
-﻿using System.Net;
-using Anihithe.Discord.Bot.WowScout.Models;
-using Anihithe.Discord.Bot.WowScout.Services;
+﻿using Anihithe.Discord.Bot.WowScout.Services;
+using Anihithe.Wow.Api.Client.Models;
 using Discord.Interactions;
 using Newtonsoft.Json;
 
@@ -21,15 +20,15 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
     // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
     public InteractionService Commands { get; set; }
 
-    [SlashCommand("get-my-char", "get character detail")]
+    [SlashCommand("get-my-raid-progress", "get character raid progress")]
     public async Task GetMyChar(string realm, string characterName)
     {
         var client = new HttpClient();
         var uri = new Uri(
-            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}?namespace=profile-eu&locale=fr_FR&access_token={BlizzardOAuth2.wowToken.accessToken}");
+            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}/encounters/raids?namespace=profile-eu&locale=fr_FR&access_token={BlizzardOAuth2.Token.accessToken}");
         var response = await client.GetAsync(uri);
         var result = await response.Content.ReadAsStringAsync();
-        var character = JsonConvert.DeserializeObject<CharacterModel>(result);
+        var character = JsonConvert.DeserializeObject<RaidApi>(result);
         await RespondAsync(character?.ToString() ?? "not found");
     }
 }

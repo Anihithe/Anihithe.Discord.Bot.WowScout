@@ -1,9 +1,14 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Instance(
-    [property: JsonPropertyName("id")] int Id,
-    [property: JsonPropertyName("name")] string Name,
-    [property: JsonPropertyName("modes")] IReadOnlyList<Mode> Modes
+    [property: JsonProperty("id")] int Id,
+    [property: JsonProperty("name")] string Name
+    
 );
+
+public record Instances(
+    [property: JsonProperty("instance")] Instance Instance,
+    [property: JsonProperty("modes")] IReadOnlyList<Mode> Modes);

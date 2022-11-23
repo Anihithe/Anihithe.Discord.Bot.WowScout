@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client.Models;
 
-public class Token
-{
-    [JsonProperty("access_token")] public string accessToken;
-    [JsonProperty("expires_in")] public int expiresIn;
-    [JsonProperty("scope")] public string scope;
-    [JsonProperty("token_type")] public string tokenType;
-}
+public record Token(
+    [property: JsonProperty("access_token")]
+    string accessToken,
+    [property: JsonProperty("expires_in")]
+    int expiresIn,
+    [property: JsonProperty("scope")] string scope,
+    [property: JsonProperty("token_type")]
+    string tokenType
+);

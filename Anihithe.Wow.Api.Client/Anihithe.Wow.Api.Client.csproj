@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <Folder Include="Models\GameDataApi\Wow" />
+      <Folder Include="Models\GameDataApi\WowClassic" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\GameDataApi\Wow" />
-      <Folder Include="Models\GameDataApi\WowClassic" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>

@@ -31,4 +31,8 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Anihithe.Wow.Api.Client\Anihithe.Wow.Api.Client.csproj" />
+    </ItemGroup>
+
 </Project>

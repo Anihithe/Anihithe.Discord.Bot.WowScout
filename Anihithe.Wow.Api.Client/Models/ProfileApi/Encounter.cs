@@ -1,12 +1,13 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Encounter(
-    [property: JsonPropertyName("id")] int Id,
-    [property: JsonPropertyName("name")] string Name,
-    [property: JsonPropertyName("completed_count")]
+    [property: JsonProperty("id")] int Id,
+    [property: JsonProperty("name")] string Name,
+    [property: JsonProperty("completed_count")]
     int CompletedCount,
-    [property: JsonPropertyName("last_kill_timestamp")]
+    [property: JsonProperty("last_kill_timestamp")]
     object LastKillTimestamp
 );

@@ -1,12 +1,13 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Progress(
-    [property: JsonPropertyName("completed_count")]
+    [property: JsonProperty("completed_count")]
     int CompletedCount,
-    [property: JsonPropertyName("total_count")]
+    [property: JsonProperty("total_count")]
     int TotalCount,
-    [property: JsonPropertyName("encounters")]
+    [property: JsonProperty("encounters")]
     IReadOnlyList<Encounter> Encounters
 );

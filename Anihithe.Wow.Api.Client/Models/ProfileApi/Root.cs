@@ -1,10 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Anihithe.Wow.Api.Client;
 
 public record Root(
-    [property: JsonPropertyName("character")]
+    [property: JsonProperty("character")]
     Character Character,
-    [property: JsonPropertyName("expansions")]
+    [property: JsonProperty("expansions")]
     IReadOnlyList<Expansion> Expansions
 );
