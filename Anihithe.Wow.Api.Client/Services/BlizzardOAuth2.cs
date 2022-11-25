@@ -2,18 +2,20 @@
 using Anihithe.Wow.Api.Client.Models;
 using Newtonsoft.Json;
 
-namespace Anihithe.Discord.Bot.WowScout.Services;
+namespace Anihithe.Wow.Api.Client.Services;
 
 public static class BlizzardOAuth2
 {
-    public static Token? Token;
+    public static Token? Token { get; private set; }
 
-    public static async Task GetToken(string clientId, string clientSecret, string oAuthUrl)
+    private const string O_AUTH_URL = "https://oauth.battle.net/token";
+
+    public static async Task GetToken(string clientId, string clientSecret)
     {
         var client = new HttpClient();
         var request = new HttpRequestMessage();
         var base64Authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{clientId}:{clientSecret}"));
-        request.RequestUri = new Uri(oAuthUrl);
+        request.RequestUri = new Uri(O_AUTH_URL);
         request.Method = HttpMethod.Post;
 
         request.Headers.Add("Accept", "*/*");

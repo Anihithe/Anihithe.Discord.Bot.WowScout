@@ -9,6 +9,7 @@
     <ItemGroup>
       <Folder Include="Models\GameDataApi\Wow" />
       <Folder Include="Models\GameDataApi\WowClassic" />
+      <Folder Include="Models\Reworked" />
     </ItemGroup>
 
     <ItemGroup>

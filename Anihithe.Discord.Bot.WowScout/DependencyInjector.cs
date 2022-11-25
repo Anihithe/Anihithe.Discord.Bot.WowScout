@@ -1,4 +1,6 @@
 ﻿using Anihithe.Discord.Bot.WowScout.Services;
+using Anihithe.Wow.Api.Client;
+using Anihithe.Wow.Api.Client.Services;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -19,6 +21,7 @@ public static class DependencyInjector
             .AddSingleton<DiscordSocketClient>()
             .AddSingleton<CommandHandler>()
             .AddSingleton<LoggingService>()
+            .AddSingleton<WowApiClient>()
             .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
 
         return Task.FromResult<IServiceProvider>(services.BuildServiceProvider());

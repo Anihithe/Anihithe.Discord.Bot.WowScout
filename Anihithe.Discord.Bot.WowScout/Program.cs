@@ -1,4 +1,6 @@
 ﻿using Anihithe.Discord.Bot.WowScout.Services;
+using Anihithe.Wow.Api.Client;
+using Anihithe.Wow.Api.Client.Services;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -15,10 +17,11 @@ internal static class Program
         var client = services.GetRequiredService<DiscordSocketClient>();
         var logging = services.GetRequiredService<LoggingService>();
         var commands = services.GetRequiredService<InteractionService>();
+        var wowApiClient = services.GetRequiredService<WowApiClient>();
         await services.GetRequiredService<CommandHandler>().InitializeAsync();
-
-        await BlizzardOAuth2.GetToken(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!, configuration["Wow:OAuthUrl"]!);
-
+        
+        wowApiClient.Config(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!);
+        wowApiClient.GetToken();
         await client.LoginAsync(TokenType.Bot, configuration["Discord:Token"]);
         await client.StartAsync();
 

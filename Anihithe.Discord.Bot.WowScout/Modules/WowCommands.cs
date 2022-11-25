@@ -1,7 +1,7 @@
 ﻿using Anihithe.Discord.Bot.WowScout.Services;
-using Anihithe.Wow.Api.Client.Models;
+using Anihithe.Wow.Api.Client.Services;
+using Discord;
 using Discord.Interactions;
-using Newtonsoft.Json;
 
 namespace Anihithe.Discord.Bot.WowScout.Modules;
 
@@ -23,12 +23,19 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
     [SlashCommand("get-my-raid-progress", "get character raid progress")]
     public async Task GetMyChar(string realm, string characterName)
     {
-        var client = new HttpClient();
-        var uri = new Uri(
-            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}/encounters/raids?namespace=profile-eu&locale=fr_FR&access_token={BlizzardOAuth2.Token.accessToken}");
-        var response = await client.GetAsync(uri);
-        var result = await response.Content.ReadAsStringAsync();
-        var character = JsonConvert.DeserializeObject<RaidApi>(result);
-        await RespondAsync(character?.ToString() ?? "not found");
+        var a = new ApiQueryService();
+        var character = await a.GetRaidProgress(realm, characterName);
+        
+        var embed = new EmbedBuilder
+        {
+            Color = Color.Teal,
+            Description = "New Legend is born !"
+        };
+
+        embed.AddField("Player", character?.Character.Name, true)
+            .AddField("Boss",
+                character?.Expansions?.First().Instances.First().Modes.First().Progress.Encounters.First().Encounter.Name, true);
+
+        await RespondAsync("", embed: embed.Build());
     }
 }
