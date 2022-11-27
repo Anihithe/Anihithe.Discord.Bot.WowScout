@@ -4,12 +4,12 @@ namespace Anihithe.Wow.Api.Client.Models.Reworked;
 
 public class AutoCheck
 {
-    public readonly string playerName;
+    public readonly string PlayerName;
     public List<EncounterProgress> encounters;
 
     public AutoCheck(DtoRoot root)
     {
-        playerName = root.Character.Name;
+        PlayerName = root.Character.Name;
         encounters = new List<EncounterProgress>();
         foreach (var expansion in root.Expansions)
         {

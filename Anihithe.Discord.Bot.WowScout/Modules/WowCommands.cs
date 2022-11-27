@@ -11,13 +11,16 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
     private CommandHandler _handler;
     private readonly ApiQueryService _apiQueryService;
     private readonly EmbedService _embedService;
+    private readonly CheckProgress _checkProgress;
 
     // constructor injection is also a valid way to access the dependecies
-    public WowCommands(CommandHandler handler, ApiQueryService apiQueryService, EmbedService embedService)
+    public WowCommands(CommandHandler handler, ApiQueryService apiQueryService, EmbedService embedService,
+        CheckProgress checkProgress)
     {
         _handler = handler;
         _apiQueryService = apiQueryService;
         _embedService = embedService;
+        _checkProgress = checkProgress;
     }
 
     // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
@@ -33,7 +36,7 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
 
         await RespondAsync("", embed: embed);
     }
-    
+
     [SlashCommand("get-my-raid-progress", "get character raid progress")]
     // ReSharper disable once UnusedMember.Global
     public async Task GetMyChara(string realm, string characterName)
@@ -49,22 +52,37 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
     // ReSharper disable once UnusedMember.Global
     public async Task StartCheck()
     {
-        await CheckProgress.StartAutoCheck();
-        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
+        await _checkProgress.StartAutoCheck();
+        await RespondAsync(await _checkProgress.GetStatusAutoCheck());
     }
-    
+
     [SlashCommand("stop-check", "Stop Check Progress")]
     // ReSharper disable once UnusedMember.Global
     public async Task StopCheck()
     {
-        await CheckProgress.StopAutoCheck();
-        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
+        await _checkProgress.StopAutoCheck();
+        await RespondAsync(await _checkProgress.GetStatusAutoCheck());
     }
-    
+
     [SlashCommand("status-check", "Get status Check Progress")]
     // ReSharper disable once UnusedMember.Global
     public async Task StatusCheck()
     {
-        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
+        await RespondAsync(await _checkProgress.GetStatusAutoCheck());
+    }
+
+    [SlashCommand("add-character", "Add Character to autocheck")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task AddCharacter(string realm, string characterName)
+    {
+        await _checkProgress.AddCharacter(realm, characterName);
+        await RespondAsync($"Add {realm}-{characterName}");
+    }
+    
+    [SlashCommand("get-characters", "Get autochecked characters")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task GetCharacters()
+    {
+        await RespondAsync(await _checkProgress.GetCharacters());
     }
 }

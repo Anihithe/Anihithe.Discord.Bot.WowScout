@@ -20,7 +20,8 @@ public static class DependencyInjector
             .AddSingleton(configuration)
             // WowApiClient
             .AddSingleton<WowApiClient>()
-            .AddTransient<ApiQueryService>()
+            .AddSingleton<ApiQueryService>()
+            .AddSingleton<CheckProgress>()
             // Discord
             .AddSingleton<DiscordSocketClient>()
             .AddSingleton<CommandHandler>()
