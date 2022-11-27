@@ -1,6 +1,5 @@
 ﻿using Anihithe.Discord.Bot.WowScout.Services;
 using Anihithe.Wow.Api.Client.Services;
-using Discord;
 using Discord.Interactions;
 
 namespace Anihithe.Discord.Bot.WowScout.Modules;
@@ -44,5 +43,28 @@ public class WowCommands : InteractionModuleBase<SocketInteractionContext>
         var embed = _embedService.NoSoSimpleEmbed(character);
 
         await RespondAsync("", embed: embed);
+    }
+
+    [SlashCommand("start-check", "Start Check Progress")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task StartCheck()
+    {
+        await CheckProgress.StartAutoCheck();
+        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
+    }
+    
+    [SlashCommand("stop-check", "Stop Check Progress")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task StopCheck()
+    {
+        await CheckProgress.StopAutoCheck();
+        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
+    }
+    
+    [SlashCommand("status-check", "Get status Check Progress")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task StatusCheck()
+    {
+        await RespondAsync(await CheckProgress.GetStatusAutoCheck());
     }
 }

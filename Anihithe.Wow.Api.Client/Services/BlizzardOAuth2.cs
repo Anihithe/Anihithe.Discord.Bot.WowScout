@@ -6,12 +6,16 @@ namespace Anihithe.Wow.Api.Client.Services;
 
 public static class BlizzardOAuth2
 {
+    private static string _clientId;
+    private static string _clientSecret;
     public static Token? Token { get; private set; }
 
     private const string O_AUTH_URL = "https://oauth.battle.net/token";
 
     public static async Task GetToken(string clientId, string clientSecret)
     {
+        _clientId = clientId;
+        _clientSecret = clientSecret;
         var client = new HttpClient();
         var request = new HttpRequestMessage();
         var base64Authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{clientId}:{clientSecret}"));
@@ -27,6 +31,11 @@ public static class BlizzardOAuth2
 
         var response = await client.SendAsync(request);
         var result = await response.Content.ReadAsStringAsync();
-        Token = JsonConvert.DeserializeObject<Token>(result);
+        Token = JsonConvert.DeserializeObject<Token>(result)!;
+    }
+
+    public static async Task RenewToken()
+    {
+        await GetToken(_clientId, _clientSecret);
     }
 }
