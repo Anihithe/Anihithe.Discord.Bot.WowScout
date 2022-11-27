@@ -10,32 +10,39 @@ namespace Anihithe.Discord.Bot.WowScout.Modules;
 public class WowCommands : InteractionModuleBase<SocketInteractionContext>
 {
     private CommandHandler _handler;
+    private readonly ApiQueryService _apiQueryService;
+    private readonly EmbedService _embedService;
 
     // constructor injection is also a valid way to access the dependecies
-    public WowCommands(CommandHandler handler)
+    public WowCommands(CommandHandler handler, ApiQueryService apiQueryService, EmbedService embedService)
     {
         _handler = handler;
+        _apiQueryService = apiQueryService;
+        _embedService = embedService;
     }
 
     // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
     public InteractionService Commands { get; set; }
 
-    [SlashCommand("get-my-raid-progress", "get character raid progress")]
+    [SlashCommand("get-test-progress", "get character test progress")]
+    // ReSharper disable once UnusedMember.Global
     public async Task GetMyChar(string realm, string characterName)
     {
-        var a = new ApiQueryService();
-        var character = await a.GetRaidProgress(realm, characterName);
-        
-        var embed = new EmbedBuilder
-        {
-            Color = Color.Teal,
-            Description = "New Legend is born !"
-        };
+        var character = await _apiQueryService.GetRaidProgress(realm, characterName);
 
-        embed.AddField("Player", character?.Character.Name, true)
-            .AddField("Boss",
-                character?.Expansions?.First().Instances.First().Modes.First().Progress.Encounters.First().Encounter.Name, true);
+        var embed = _embedService.SimpleEmbed(character);
 
-        await RespondAsync("", embed: embed.Build());
+        await RespondAsync("", embed: embed);
+    }
+    
+    [SlashCommand("get-my-raid-progress", "get character raid progress")]
+    // ReSharper disable once UnusedMember.Global
+    public async Task GetMyChara(string realm, string characterName)
+    {
+        var character = await _apiQueryService.GetRaidProgress(realm, characterName);
+
+        var embed = _embedService.NoSoSimpleEmbed(character);
+
+        await RespondAsync("", embed: embed);
     }
 }

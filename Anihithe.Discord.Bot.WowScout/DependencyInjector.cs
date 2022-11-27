@@ -18,10 +18,15 @@ public static class DependencyInjector
             .AddDiscordSocketConfig()
             .AddDiscordCommandServiceConfig()
             .AddSingleton(configuration)
+            // WowApiClient
+            .AddSingleton<WowApiClient>()
+            .AddTransient<ApiQueryService>()
+            // Discord
             .AddSingleton<DiscordSocketClient>()
             .AddSingleton<CommandHandler>()
             .AddSingleton<LoggingService>()
-            .AddSingleton<WowApiClient>()
+            .AddTransient<EmbedService>()
+
             .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
 
         return Task.FromResult<IServiceProvider>(services.BuildServiceProvider());

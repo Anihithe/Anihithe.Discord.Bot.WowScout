@@ -20,8 +20,9 @@ internal static class Program
         var wowApiClient = services.GetRequiredService<WowApiClient>();
         await services.GetRequiredService<CommandHandler>().InitializeAsync();
         
-        wowApiClient.Config(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!);
-        wowApiClient.GetToken();
+        await wowApiClient.Config(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!);
+        await wowApiClient.GetToken();
+        
         await client.LoginAsync(TokenType.Bot, configuration["Discord:Token"]);
         await client.StartAsync();
 

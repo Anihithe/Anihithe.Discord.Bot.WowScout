@@ -7,14 +7,14 @@ public class WowApiClient
     private string clientId { get; set; }
     private string clientSecret { get; set; }
 
-    public void Config(string id, string secret)
+    public async Task Config(string id, string secret)
     {
         clientId = id;
         clientSecret = secret;
-        GetToken();
+         await GetToken();
     }
 
-    public async void GetToken()
+    public async Task GetToken()
     {
         await BlizzardOAuth2.GetToken(clientId, clientSecret);
     }
