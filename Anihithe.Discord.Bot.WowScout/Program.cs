@@ -1,6 +1,7 @@
 ﻿using Anihithe.Discord.Bot.WowScout.Modules;
 using Anihithe.Discord.Bot.WowScout.Services;
 using Anihithe.Wow.Api.Client;
+using Anihithe.Wow.Api.Client.Models.Auth;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -14,15 +15,12 @@ internal static class Program
     {
         var configuration = ConfigurationBuilder.GetConfiguration();
         var services = await DependencyInjector.ConfigureServicesAsync(configuration);
+        
         var client = services.GetRequiredService<DiscordSocketClient>();
         var logging = services.GetRequiredService<LoggingService>();
         var commands = services.GetRequiredService<InteractionService>();
-        var wowApiClient = services.GetRequiredService<WowApiClient>();
         await services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-        await wowApiClient.Config(configuration["Wow:ClientId"]!, configuration["Wow:ClientSecret"]!);
-        await wowApiClient.GetToken();
-        
         await client.LoginAsync(TokenType.Bot, configuration["Discord:Token"]);
         await client.StartAsync();
 

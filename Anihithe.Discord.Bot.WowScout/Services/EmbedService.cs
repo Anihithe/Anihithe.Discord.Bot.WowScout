@@ -27,7 +27,8 @@ public class EmbedService
         var bossList = new StringBuilder();
         foreach (var encounter in character.encounters)
         {
-            bossList.AppendLine($"[{encounter.ModeName}] {encounter.RaidName} - {encounter.BossName} {encounter.LastKillTimeStamp.ToLocalTime()}");
+            bossList.AppendLine(
+                $"[{encounter.ModeName}] {encounter.RaidName} - {encounter.BossName} {encounter.LastKillTimeStamp.ToLocalTime()}");
         }
 
         var embed = new EmbedBuilder()
@@ -38,6 +39,7 @@ public class EmbedService
 
         return embed.Build();
     }
+
 
     public Embed NoSoSimpleEmbed(DtoRoot character)
     {
@@ -68,6 +70,22 @@ public class EmbedService
                 bossList, true)
             .AddField("Status", bossStatus, true)
             .AddField("Last kill", lastkill, true);
+
+
+        return embed.Build();
+    }
+
+    public Embed NotSoSimpleProgressEmbed(AutoCheck character, EmbedBuilder embed)
+    {
+        var bossList = new StringBuilder();
+        foreach (var encounter in character.encounters)
+        {
+            bossList.AppendLine(
+                $"[{encounter.ModeName}] {encounter.RaidName} - {encounter.BossName} {encounter.LastKillTimeStamp.ToLocalTime()}");
+        }
+
+        embed.AddField("Player", character.PlayerName)
+            .AddField("Encounters", bossList, true);
 
         return embed.Build();
     }

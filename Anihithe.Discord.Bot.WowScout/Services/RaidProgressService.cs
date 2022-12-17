@@ -2,6 +2,7 @@
 using Anihithe.Discord.Bot.WowScout.Models;
 using Anihithe.Wow.Api.Client.Models.Reworked;
 using Anihithe.Wow.Api.Client.Services;
+using Discord;
 using Discord.WebSocket;
 
 namespace Anihithe.Discord.Bot.WowScout.Services;
@@ -81,6 +82,9 @@ public class CheckProgress
     private async Task ProcessCheck()
     {
         Console.WriteLine($"{DateTime.Now} - ProcessCheck");
+        var embed = new EmbedBuilder()
+            .WithColor(Color.Teal)
+            .WithDescription("New Kill !");
         foreach (var character in _charactersTracked)
         {
             try
@@ -95,7 +99,7 @@ public class CheckProgress
                 await _client
                     .GetGuild(1003246175786385508)
                     .GetTextChannel(1003246265510928384)
-                    .SendMessageAsync("", embed: _embedService.SimpleProgressEmbed(val));
+                    .SendMessageAsync("", embed: _embedService.NotSoSimpleProgressEmbed(val, embed));
             }
             catch (Exception e)
             {

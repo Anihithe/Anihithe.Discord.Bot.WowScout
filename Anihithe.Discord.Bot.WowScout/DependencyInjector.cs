@@ -1,5 +1,6 @@
-﻿using Anihithe.Discord.Bot.WowScout.Services;
-using Anihithe.Wow.Api.Client;
+﻿using System.Configuration;
+using Anihithe.Discord.Bot.WowScout.Services;
+using Anihithe.Wow.Api.Client.Models.Auth;
 using Anihithe.Wow.Api.Client.Services;
 using Discord.Commands;
 using Discord.Interactions;
@@ -13,13 +14,14 @@ public static class DependencyInjector
 {
     public static Task<IServiceProvider> ConfigureServicesAsync(IConfigurationRoot configuration)
     {
-        var services = new ServiceCollection();
+        ServiceCollection services = new ServiceCollection();
+        services.Configure<BattleNetSettings>(configuration.GetSection(BattleNetSettings.BATTLE_NET));
         services
             .AddDiscordSocketConfig()
             .AddDiscordCommandServiceConfig()
             .AddSingleton(configuration)
-            // WowApiClient
-            .AddSingleton<WowApiClient>()
+            // BattleNet
+            .AddSingleton<BattleNetSettings>()
             .AddSingleton<ApiQueryService>()
             .AddSingleton<CheckProgress>()
             // Discord
@@ -29,7 +31,7 @@ public static class DependencyInjector
             .AddTransient<EmbedService>()
 
             .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
-
+        
         return Task.FromResult<IServiceProvider>(services.BuildServiceProvider());
     }
 
