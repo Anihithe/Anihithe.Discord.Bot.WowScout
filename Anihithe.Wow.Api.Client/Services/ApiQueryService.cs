@@ -19,7 +19,7 @@ public class ApiQueryService
     {
         var client = new HttpClient();
         var uri = new Uri(
-            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}/encounters/raids?namespace=profile-eu&locale=fr_FR&access_token={_battleNetTokenService.GetToken()}");
+            $"https://eu.api.blizzard.com/profile/wow/character/{realm}/{characterName}/encounters/raids?namespace=profile-eu&locale=fr_FR&access_token={await _battleNetTokenService.GetToken()}");
 
         var response = await client.GetAsync(uri);
         var result = await response.Content.ReadAsStringAsync();

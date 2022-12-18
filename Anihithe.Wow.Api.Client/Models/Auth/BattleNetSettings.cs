@@ -3,7 +3,7 @@
 public class BattleNetSettings
 {
     public const string BATTLE_NET = "BattleNet";
-    public string ClientId;
-    public string ClientSecret;
-    public string TokenUrl;
+    public string ClientId { get; set; }
+    public string ClientSecret { get; set; }
+    public string TokenUrl { get; set; }
 }

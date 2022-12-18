@@ -13,7 +13,6 @@ public class BattleNetTokenService
     private BattleNetToken _token = new();
     private readonly BattleNetSettings _battleNetSettings;
 
-    //Todo: Implémenter l'initialisation des BattleNetSettings
     public BattleNetTokenService(HttpClient httpClient, IOptions<BattleNetSettings> battleNetSettings)
     {
         _httpClient = httpClient;
@@ -44,9 +43,18 @@ public class BattleNetTokenService
         var response = await _httpClient.SendAsync(request);
         if(response.IsSuccessStatusCode)
         {
-            var json = await response.Content.ReadAsStringAsync();
-            _token = JsonConvert.DeserializeObject<BattleNetToken>(json);
-            _token.ExpiresAt = DateTime.UtcNow.AddSeconds(_token.ExpiresIn);
+            try
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                _token = JsonConvert.DeserializeObject<BattleNetToken>(json);
+                _token.ExpiresAt = DateTime.UtcNow.AddSeconds(_token.ExpiresIn);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
         else
         {

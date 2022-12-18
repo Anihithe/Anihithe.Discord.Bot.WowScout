@@ -14,14 +14,15 @@ public static class DependencyInjector
 {
     public static Task<IServiceProvider> ConfigureServicesAsync(IConfigurationRoot configuration)
     {
-        ServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
         services.Configure<BattleNetSettings>(configuration.GetSection(BattleNetSettings.BATTLE_NET));
         services
             .AddDiscordSocketConfig()
             .AddDiscordCommandServiceConfig()
             .AddSingleton(configuration)
+            .AddSingleton<HttpClient>()
             // BattleNet
-            .AddSingleton<BattleNetSettings>()
+            .AddSingleton<BattleNetTokenService>()
             .AddSingleton<ApiQueryService>()
             .AddSingleton<CheckProgress>()
             // Discord

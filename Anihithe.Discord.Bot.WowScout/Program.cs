@@ -2,6 +2,7 @@
 using Anihithe.Discord.Bot.WowScout.Services;
 using Anihithe.Wow.Api.Client;
 using Anihithe.Wow.Api.Client.Models.Auth;
+using Anihithe.Wow.Api.Client.Services;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
